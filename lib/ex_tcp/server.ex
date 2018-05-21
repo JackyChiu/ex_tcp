@@ -15,8 +15,18 @@ defmodule ExTcp.Server do
 
   defp accept(listen_socket) do
     {:ok, socket} = :gen_tcp.accept(listen_socket)
-    serve(socket)
+    start_serve_process(socket)
+
     accept(socket)
+  end
+
+  defp start_serve_process(socket) do
+    {:ok, pid} =
+      Task.Supervisor.start_child(ExTcp.TaskSupervisor, fn ->
+        serve(socket)
+      end)
+
+    :ok = :gen_tcp.controlling_process(socket, pid)
   end
 
   defp serve(socket) do

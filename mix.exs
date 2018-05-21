@@ -15,7 +15,7 @@ defmodule ExTcp.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {ExTcp, []}
+      mod: {ExTcp.Application, []}
     ]
   end
 
