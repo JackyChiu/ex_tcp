@@ -16,8 +16,9 @@ defmodule ExTcp.Server do
   defp accept(listen_socket) do
     {:ok, socket} = :gen_tcp.accept(listen_socket)
     start_serve_process(socket)
+    Logger.info("Accepted new connection")
 
-    accept(socket)
+    accept(listen_socket)
   end
 
   defp start_serve_process(socket) do
@@ -31,7 +32,7 @@ defmodule ExTcp.Server do
 
   defp serve(socket) do
     packet = read(socket)
-    write(socket, packet)
+    write(socket, "echoing: #{packet}")
 
     serve(socket)
   end

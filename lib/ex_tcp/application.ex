@@ -7,6 +7,6 @@ defmodule ExTcp.Application do
       Supervisor.child_spec({Task, fn -> ExTcp.Server.listen(4000) end}, restart: :permanent)
     ]
 
-    Supervisor.start_link(children, strategy: :one_for_one, name: ExTcp.Supervisor)
+    Supervisor.start_link(children, strategy: :one_for_one)
   end
 end
